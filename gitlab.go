@@ -119,7 +119,6 @@ func (g *Gitlab) ResourceUrlRaw(u string, params map[string]string) (string, str
 			u = strings.Replace(u, key, val, -1)
 		}
 	}
-
 	path := u
 	u = g.BaseUrl + g.ApiPath + path + "?private_token=" + g.Token
 	p, err := url.Parse(u)
@@ -127,7 +126,6 @@ func (g *Gitlab) ResourceUrlRaw(u string, params map[string]string) (string, str
 		return u, ""
 	}
 	opaque := "//" + p.Host + g.ApiPath + path
-
 	return u, opaque
 }
 

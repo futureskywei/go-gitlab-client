@@ -6,6 +6,7 @@ import (
 )
 
 const (
+	repo_url_archive  = "/projects/:id/repository/archive"          // Get a an archive of the repository
 	repo_url_branches = "/projects/:id/repository/branches"         // List repository branches
 	repo_url_branch   = "/projects/:id/repository/branches/:branch" // Get a specific branch of a project.
 	repo_url_tags     = "/projects/:id/repository/tags"             // List project repository tags
@@ -32,8 +33,8 @@ type BranchCommit struct {
 	/*
 			"parents": [
 			  {"id": "9b0c4b08e7890337fc8111e66f809c8bbec467a9"},
-		      {"id": "3ac634dca850cab70ab14b43ad6073d1e0a7827f"}
-		    ]
+		  {"id": "3ac634dca850cab70ab14b43ad6073d1e0a7827f"}
+		]
 	*/
 }
 
@@ -233,6 +234,21 @@ func (g *Gitlab) RepoRawFile(id, sha, filepath string) ([]byte, error) {
 		":sha": sha,
 	})
 	url += "&filepath=" + filepath
+
+	contents, err := g.buildAndExecRequestRaw("GET", url, opaque, nil)
+
+	return contents, err
+}
+
+/*
+Get a an archive of the repository
+*/
+func (g *Gitlab) RepoArchive(id, sha string) ([]byte, error) {
+
+	url, opaque := g.ResourceUrlRaw(repo_url_archive, map[string]string{
+		":id": id,
+	})
+	url += "&sha=" + sha
 
 	contents, err := g.buildAndExecRequestRaw("GET", url, opaque, nil)
 

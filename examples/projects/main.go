@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/plouc/go-gitlab-client"
+	"github.com/futureskywei/go-gitlab-client"
 	"io/ioutil"
 	"os"
 	"strconv"
